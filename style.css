@@ -137,7 +137,8 @@ body {
 }
 
 .add__description,
-.add__value {
+.add__value,
+.add__date {
     border: 1px solid #e7e7e7;
     background-color: #fff;
     color: inherit;
@@ -151,6 +152,7 @@ body {
 
 .add__description { width: 400px;}
 .add__value { width: 100px;}
+.add__date { width: 200px;}
 
 .add__btn {
     font-size: 35px;
@@ -168,7 +170,8 @@ body {
 
 .add__type:focus,
 .add__description:focus,
-.add__value:focus {
+.add__value:focus,
+.add__date {
     outline: none;
     border: 1px solid #28B9B5;
 }
@@ -210,8 +213,13 @@ h2 {
 .item:first-child { border-top: 1px solid #e7e7e7; }
 .item:nth-child(even) { background-color: #f7f7f7; }
 
+.item__date {
+    float: left;
+}
+
 .item__description {
     float: left;
+    margin-left: 15px;
 }
 
 .item__value {
