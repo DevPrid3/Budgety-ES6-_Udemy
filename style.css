@@ -49,10 +49,11 @@ body {
 }
 
 .budget__title {
-    font-size: 18px;
+    font-size: 25px;
     text-align: center;
     margin-bottom: 10px;
-    font-weight: 300;
+    font-weight: 400;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .budget__value {
@@ -152,7 +153,7 @@ body {
 
 .add__description { width: 400px;}
 .add__value { width: 100px;}
-.add__date { width: 200px;}
+.add__date { width: 150px;}
 
 .add__btn {
     font-size: 35px;

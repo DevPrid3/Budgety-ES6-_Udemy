@@ -72,9 +72,11 @@ var budgetController = (() => {
                 ID = 0;
             }
 
-            // Format Date before newItem
+            // check date
+            if(datep === 'NaN-NaN-NaN'){
+                datep = '--/--/--';
+            }
             
-
             // Create new item based on 'inc' or 'exp' type
             if(type === 'exp'){
                 newItem = new Expense(ID, des, val, datep);
@@ -232,7 +234,9 @@ var UIController = (() => {
                 type: document.querySelector(DOMstrings.inputType).value, 
                 description: document.querySelector(DOMstrings.inputDescription).value,
                 value: parseFloat(document.querySelector(DOMstrings.inputValue).value), // ParseFloat, convert in decimal and allow to calculate budget
-                datePrel: document.querySelector(DOMstrings.inputDate).value
+                datePrel: new Date(document.querySelector(DOMstrings.inputDate).value).getDate()
+                + '-' + new Date(document.querySelector(DOMstrings.inputDate).value).getMonth()
+                + '-' + new Date(document.querySelector(DOMstrings.inputDate).value).getFullYear()
             };
         },
 
