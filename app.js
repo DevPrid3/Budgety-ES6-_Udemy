@@ -3,18 +3,19 @@ var budgetController = (() => {
 
     class Commun {
 
-        constructor(id, description, value, datePrel){
+        constructor(id, description, value, datePrel, categorie = 'Standard'){
             this.id = id;
             this.description = description;
             this.value = value 
             this.datePrel = datePrel;
+            this.categorie = categorie;
         }
     }
 
     class Expense extends Commun {
 
-        constructor(id, description, value, datePrel){
-            super(id, description, value, datePrel);
+        constructor(id, description, value, datePrel, categorie){
+            super(id, description, value, datePrel, categorie);
             this.percentage = -1
         }
 
@@ -34,8 +35,8 @@ var budgetController = (() => {
 
     class Income extends Commun {
 
-        constructor(id, description, value, datePrel){
-            super(id, description, value, datePrel);
+        constructor(id, description, value, datePrel, categorie){
+            super(id, description, value, datePrel, categorie);
         }
     }
 
@@ -61,7 +62,7 @@ var budgetController = (() => {
     };
 
     return {
-        addItem: (type, des, val, datep) => {
+        addItem: (type, des, val, datep, cat) => {
 
             let newItem, ID;
 
@@ -79,9 +80,9 @@ var budgetController = (() => {
             
             // Create new item based on 'inc' or 'exp' type
             if(type === 'exp'){
-                newItem = new Expense(ID, des, val, datep);
+                newItem = new Expense(ID, des, val, datep, cat);
             } else if(type === 'inc') {
-                newItem = new Income(ID, des, val, datep);
+                newItem = new Income(ID, des, val, datep, cat);
             }
 
             // Push it into our data structure
@@ -175,6 +176,7 @@ var UIController = (() => {
     const DOMstrings = {
         inputType: '.add__type',
         inputDescription: '.add__description',
+        inputCategorie: '.add__categorie',
         inputValue: '.add__value',
         inputDate: '.add__date',
         inputBtn: '.add__btn',
@@ -236,7 +238,8 @@ var UIController = (() => {
                 value: parseFloat(document.querySelector(DOMstrings.inputValue).value), // ParseFloat, convert in decimal and allow to calculate budget
                 datePrel: new Date(document.querySelector(DOMstrings.inputDate).value).getDate()
                 + '-' + new Date(document.querySelector(DOMstrings.inputDate).value).getMonth()
-                + '-' + new Date(document.querySelector(DOMstrings.inputDate).value).getFullYear()
+                + '-' + new Date(document.querySelector(DOMstrings.inputDate).value).getFullYear(),
+                categorie: document.querySelector(DOMstrings.inputCategorie).value
             };
         },
 
@@ -247,11 +250,11 @@ var UIController = (() => {
 
             if(type === 'inc'){
                 element = DOMstrings.incomeContainer;
-                html = '<div class="item clearfix" id="inc-%id%"><div class="item__date">%date%</div><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+                html = '<div class="item clearfix" id="inc-%id%"><div class="item__badge">%categorie%</div><div class="item__date">%date%</div><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
             
             } else if (type === 'exp') {
                 element = DOMstrings.expensesContainer;
-                html = '<div class="item clearfix" id="exp-%id%"><div class="item__date">%date%</div><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+                html = '<div class="item clearfix" id="exp-%id%"><div class="item__badge">%categorie%</div><div class="item__date">%date%</div><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
 
             }
 
@@ -260,9 +263,26 @@ var UIController = (() => {
             newHtml = newHtml.replace('%date%', obj.datePrel);
             newHtml = newHtml.replace('%description%', obj.description);
             newHtml = newHtml.replace('%value%', formatNumber(obj.value, type));
+            newHtml = newHtml.replace('%categorie%', obj.categorie);
+            
             
             // Insert the HTML into the DOM
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+            
+            //ColorSwap Categorie Badge
+            let badge = document.querySelector(DOMstrings.inputCategorie);
+            if(badge.value === 'Important') {
+                badge.style.backgroundColor = "#FF5049";
+            } else if(badge.value === 'Loisirs') {
+                badge.style.backgroundColor = "#1EA9FA";
+            } else if(badge.value === 'Food') {
+                badge.style.backgroundColor = "#36BA97";
+            } else if(badge.value === 'Others') {
+                badge.style.backgroundColor = "#FACA2B";
+            } else {
+                badge.style.backgroundColor = "red";
+            }
+            
 
         },
 
@@ -407,7 +427,7 @@ var controller = ((budgetCtrl, UICtrl) => {
         if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
 
         // 2. Add the item to the dudget controller
-        newItem = budgetCtrl.addItem(input.type, input.description, input.value, input.datePrel);
+        newItem = budgetCtrl.addItem(input.type, input.description, input.value, input.datePrel, input.categorie);
 
         // 3. Add the item to the UI
         UICtrl.addListItem(newItem, input.type);

@@ -46,6 +46,12 @@
                     </select>
                     <input type="date" class="add__date">
                     <input type="text" class="add__description" placeholder="Add description">
+                    <select name="categorie" class="add__categorie">
+                            <option value="Important">Important</option>
+                            <option value="Loisirs">Loisirs</option>
+                            <option value="Food">Food</option>
+                            <option value="Others">Others</option>
+                    </select>
                     <input type="number" class="add__value" placeholder="Value">
                     <button class="add__btn"><i class="ion-ios-checkmark-outline"></i></button>
                 </div>
@@ -57,10 +63,12 @@
                     
                     <div class="income__list">
                        
-                        <!--
-                        <div class="item clearfix" id="income-0">
+                        
+                        <!-- <div class="item clearfix" id="income-0">
+                            <div class="item__badge"></div>
                             <div class="item__description">Salary</div>
-                            <div class="right clearfix">
+                            <div class="right clearfix"> 
+                                <div class="item__date">21-12-2019</div>
                                 <div class="item__value">+ 2,100.00</div>
                                 <div class="item__delete">
                                     <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
@@ -71,13 +79,14 @@
                         <div class="item clearfix" id="income-1">
                             <div class="item__description">Sold car</div>
                             <div class="right clearfix">
+                                <div class="item__date">21-12-2019</div>
                                 <div class="item__value">+ 1,500.00</div>
                                 <div class="item__delete">
                                     <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
                                 </div>
                             </div>
-                        </div>
-                        -->
+                        </div> -->
+                       
                         
                     </div>
                 </div>
@@ -103,6 +112,7 @@
                         <div class="item clearfix" id="expense-1">
                             <div class="item__description">Grocery shopping</div>
                             <div class="right clearfix">
+                                <div class="item__date">21-12-2019</div>
                                 <div class="item__value">- 435.28</div>
                                 <div class="item__percentage">10%</div>
                                 <div class="item__delete">
